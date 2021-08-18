@@ -50,7 +50,12 @@ app.listen(PORT, async () => {
 });
 
 
-process.on('exit', async () => {
+// Stop server gracefully
+process.on('SIGTERM', async () => {
   await channel.close();
   await connection.close();
-});
+  app.close(() => {
+    console.log('Process terminated')
+    process.kill(process.pid, 'SIGTERM')
+  })
+})
