@@ -8,7 +8,6 @@ const express = require('express');
 const amqp = require('amqplib');
 const app = express();
 const upload = require("express-fileupload")
-const fs = require('fs');
 const csv = require('csvtojson')
 let connection, channel;
 
@@ -27,11 +26,16 @@ const connect = async () => {
 
 const parseCSV = async (fullPath) => {
   const employeeData = await csv().fromFile(fullPath);
-  // Something will be done over here
-  await channel.sendToQueue(CHANNEL_NAME, Buffer.from(JSON.stringify(employeeData)));
+  employeeData.forEach(async emp => {
+    await channel.sendToQueue(CHANNEL_NAME, Buffer.from(JSON.stringify(emp)));
+  })
 };
 
-app.post('/upload', async (req, res) => {
+app.get('/', (req, res) => {
+  console.log('Called...');
+})
+
+app.post('/v1/upload', async (req, res) => {
   const file = req.files.fileName;
   const fullPath = `${UPLOAD_PATH}${file.name}`
   

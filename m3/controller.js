@@ -67,9 +67,10 @@ module.exports.getEmployeeList = async (req, res) => {
 
   } catch (err) {
     // Error response in case of exception.
-    res.status(500).json({
+    res.status(200).json({
       status: 500,
-      message: err.message,
+      message: err.message.includes('does not exist') ? 'Table does not exists yet, please start the M2 microservice for migration and try it again.':
+      err.message
     })
   }
 }

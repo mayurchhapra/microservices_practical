@@ -20,17 +20,15 @@ const connect = async () => {
       // retrieve the data from channel and parse into JSON
       employeeData = JSON.parse(Buffer.from(data.content))
 
-      employeeData.forEach(async e => {
-        await knex('employee').insert({
-          id: e.id,
-          name: e.employee_name,
-          email: e.email,
-          contact: e.contact,
-          company: e.company
-        })
-        .onConflict("id")
-        .ignore();
+      await knex('employee').insert({
+        id: employeeData.id,
+        name: employeeData.employee_name,
+        email: employeeData.email,
+        contact: employeeData.contact,
+        company: employeeData.company
       })
+      .onConflict("id")
+      .ignore();
 
       // Acknowledge the channel
       channel.ack(data);
