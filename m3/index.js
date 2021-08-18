@@ -1,3 +1,4 @@
+require('dotenv').config()
 // constants
 const PORT = 5003
 

@@ -36,23 +36,25 @@ app.get('/', (req, res) => {
 })
 
 app.post('/v1/upload', async (req, res) => {
-  const file = req.files.fileName;
-  const fullPath = `${UPLOAD_PATH}${file.name}`
-  
-  file.mv(fullPath, async (err) => {
-    if (err){
-      res.status(500).send(err)
-    }
-    await parseCSV(fullPath);
-    res.status(200).send('File uploaded successfully.');
-  })
+  try {
+    const file = req.files.fileName;
+    const fullPath = `${UPLOAD_PATH}${file.name}`;
+    file.mv(fullPath, async (err) => {
+      if (err){
+        res.status(500).send(err)
+      }
+      await parseCSV(fullPath);
+      res.status(200).json({
+        message: 'File uploaded successfully.'
+      });
+    })
+  } catch (err) {}
 });
 
 app.listen(PORT, async () => {
   await connect();
   console.log(`Server is running at ${PORT}`);
 });
-
 
 // Stop server gracefully
 process.on('SIGTERM', async () => {

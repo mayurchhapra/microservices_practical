@@ -5,10 +5,10 @@ module.exports = {
   development: {
     client: 'pg',
     connection: {
-      host : '127.0.0.1',
-      user : 'postgres',
-      password : 'toortoor',
-      database : 'postgres',
+      host : process.env.HOST || '127.0.0.1',
+      user : process.env.USER || 'postgres',
+      password : process.env.PASSWORD ||'toortoor',
+      database : process.env.DATABASE || 'postgres',
       charset: 'utf8'
     },
     migrations: {

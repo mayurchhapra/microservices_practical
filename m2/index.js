@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 // constants
 const PORT = 5002
 const AMQP_URL = 'amqp://localhost:5672';
