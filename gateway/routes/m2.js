@@ -2,7 +2,8 @@ const { Router } = require('express');
 const apiAdapter = require('./apiAdapter');
 const router = Router();
 
-const BASE_URL = 'http://localhost:5003/';
+// Call via docker
+const BASE_URL = 'http://m2:5003/';
 const version  = 'v1';
 const api = apiAdapter(`${BASE_URL}${version}`);
 

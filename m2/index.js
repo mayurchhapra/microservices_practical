@@ -2,7 +2,7 @@ require('dotenv').config()
 
 // constants
 const PORT = 5002
-const AMQP_URL = 'amqp://localhost:5672';
+const AMQP_URL = 'amqp://rabbitmq:5672';
 const CHANNEL_NAME = 'employee';
 
 const express = require('express');

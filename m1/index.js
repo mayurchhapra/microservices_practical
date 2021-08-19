@@ -1,6 +1,6 @@
 // constants
 const PORT = 5001
-const AMQP_URL = 'amqp://localhost:5672';
+const AMQP_URL = 'amqp://rabbitmq:5672';
 const CHANNEL_NAME = 'employee';
 const UPLOAD_PATH = `${__dirname}/uploads/`;
 
@@ -30,10 +30,6 @@ const parseCSV = async (fullPath) => {
     await channel.sendToQueue(CHANNEL_NAME, Buffer.from(JSON.stringify(emp)));
   })
 };
-
-app.get('/', (req, res) => {
-  console.log('Called...');
-})
 
 app.post('/v1/upload', async (req, res) => {
   try {
